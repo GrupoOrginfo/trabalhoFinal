@@ -1,0 +1,37 @@
+var timer;
+var controle=0;
+$(window).bind('load', function(){
+   timer && clearTimeout(timer);
+   timer = setTimeout(function(){resize();}, 2000);
+});
+
+$(window).bind('resize', function(){
+   timer && clearTimeout(timer);
+   timer = setTimeout(function(){resize();}, 200);
+});
+
+function resize(){
+	largura = window.innerWidth;
+	if ( largura <= 400)
+	{
+		$("body").stop().css({"marginLeft":"-250px"});
+	}else{
+		$("body").stop().css({"marginLeft":"0px"});
+	}
+}
+
+function controlemenu(){
+	if (controle == 0)
+		{
+			$("body").stop().css({"marginLeft":"0px"});
+			
+			if (largura <= 400)
+			{controle=1;}
+		}
+	else
+		{
+			$("body").stop().css({"marginLeft":"-250px"});			
+			controle=0;
+		}
+}
+
