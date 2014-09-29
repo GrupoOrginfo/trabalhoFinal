@@ -1,13 +1,21 @@
-var timer;
-var controle= -250;
-var width ;
 
-var touchXi = 0;
-var touchXf = 0;
+//----------------------------------------------//
+//					Variaveis					//
+//----------------------------------------------//
+
+var width ;
+var timer;
+var controle= -250; //isso e a margem esquerda da sidebar. Quando carrega a pagina tem valor -250.  
+var touchXi = 0;	//isso e a posicao inicial do dedo no TouchMode
+var touchXf = 0;	//isso e a posicao final do dedo no TouchMode
 
 conteudo = document.getElementsByClassName("conteudo");
 
-function readDeviceOrientation() {
+//----------------------------------------------//
+//					Funcoes						//
+//----------------------------------------------//
+
+function readDeviceOrientation() {		//Essa funcao serve para ajustar bug do iphone na hora de mudar orientação vertical/horizontal
                  		
     if (Math.abs(window.orientation) === 90) {
         $("meta[name=viewport]").attr('content', "width=device-height, initial-scale=1, maximum-scale=1, user-scalable=no");
@@ -17,26 +25,27 @@ function readDeviceOrientation() {
 }
 
 
-function resize(){
+function resize(){	//Essa funcao verifica se a largura da janela e menor que 650px. Se for, esconde sidebar. Senao, mostra sidebar.
+					//Essa funcao funciona apenas no redimensionamento da janela
 	largura = window.innerWidth;
 	if ( largura <= 650)
 	{
-		$("body").stop().css({"marginLeft":"-250px"});
+		$("body").stop().css({"marginLeft":"-250px"}); //Oculta sidebar
 		$("#abremenu").stop().css({"width":"100%"});
-		$('#menu').stop().css({"display": "block"});
+		$('#menu').stop().css({"display": "block"}); //Mostra botao de menu
 		
 	}else{
 		controle = -250;
-		$("body").stop().css({"marginLeft":"0px"});
+		$("body").stop().css({"marginLeft":"0px"});	//Mostra sidebar 
 		$("#abremenu").stop().css({"width":"calc(100% - 250px)"});
-		$('#menu').stop().css({"display": "none"});
+		$('#menu').stop().css({"display": "none"}); //Oculta botao de menu
 	}
 }
 
 
 
-function controlemenu(valor){
-
+function controlemenu(valor){ //Essa funcao tambem mostra/esconde sidebar mas so funciona com as chamadas de touch e click de mouse 
+//estes if's verificam qual a acao do usuario.
 	if((valor != "clicknot")&&(largura <= 650))
 	{
 		if (valor == "menuclick")
@@ -62,15 +71,19 @@ function controlemenu(valor){
 
 
 
+//----------------------------------------------//
+//				Listeners de Eventos			//
+//----------------------------------------------//
 
-$(window).bind('load', function(){
+
+$(window).bind('load', function(){ // Função de configuração ao carregar janela (É como se fosse um construtor do Java).
 	width = $(window).width();
-	readDeviceOrientation();
-   timer && clearTimeout(timer);
-   timer = setTimeout(function(){resize();}, 200);
+	readDeviceOrientation(); //chama a função de orientação.
+   	timer && clearTimeout(timer);
+   	timer = setTimeout(function(){resize();}, 200);
 });
 
-$(window).bind('resize', function(){
+$(window).bind('resize', function(){	//função que verifica quado a janela foi redimensionada. se for, chama a função resize.
 	width2 = $(window).width();
 	if (width != width2)
 	{
@@ -81,7 +94,8 @@ $(window).bind('resize', function(){
    
 });
 
-$( window ).on( "orientationchange", function( event ) {
+$( window ).on( "orientationchange", function( event ) { //verifica mudanca na orientacao da pagina e entao
+	//chama a função de ajuste do bug do iphone;
 
 	readDeviceOrientation();
 
@@ -89,47 +103,44 @@ $( window ).on( "orientationchange", function( event ) {
 
 
 
-window.addEventListener('click',function(e){
+window.addEventListener('click',function(e){ //Verifica quando o usuario clicou no menu para aparecer sidebar.
 	valor = e.target.getAttribute("data-opt");
 	controlemenu(valor);
 });
 
 
-document.addEventListener("touchstart", function(ev){
+document.addEventListener("touchstart", function(ev){ //verifica quando o usuario encostou o dedo na tela.
 	
-	touchXi = ev.changedTouches[0].clientX;
+	touchXi = ev.changedTouches[0].clientX; //atribui  a posicao inicial do dedo na variavel touchXi
 
 },false);
 
 
-document.addEventListener("touchend", function(ev){
+document.addEventListener("touchend", function(ev){ //verifica quando o usuário retirou o dedo na tela.
 	
-	touchXf = ev.changedTouches[0].clientX;
+	touchXf = ev.changedTouches[0].clientX; //atribui  a posição final do dedo na variavel touchXi
 
-	valor = ev.target.getAttribute("data-opt");
+	valor = ev.target.getAttribute("data-opt"); //pega valores data-opt do html e joga na variavel valor
 
-	var touch = touchXf-touchXi;
+	var touch = touchXf-touchXi; //diferença entre pontos inicial e final ao realizar a requisicao touch
 
-	console.log(touchXf);
-	console.log(touchXi);
-
-	if(touch == 0)
+	if(touch == 0) //se o usuario so tenha dado um tap na tela...
 	{	
 
-		controlemenu(valor);
+		controlemenu(valor); //chama a funcao controlemenu e passa valor como parametro
 
-	}else{
+	}else{ //senao...
 
-		if(touch < -130)
+		if(touch < -70) //se usuario passou dedo da direita para esquerda em 70 px ou mais
 		{
-			controle = 0;
-			controlemenu();
+			controle = 0;	
+			controlemenu(); //chama controlemenu() e não passa parametro
 		}
-		else{
-			if(touch > 130)
+		else{ //senao
+			if(touch > 70)//se usuario passou dedo da esquerda para direita em 70 px ou mais
 			{
 				controle = -250;
-				controlemenu("menuclick");
+				controlemenu("menuclick");//chama controlemenu() e passa "menuclick" como parâmetro
 			}
 		}
 
