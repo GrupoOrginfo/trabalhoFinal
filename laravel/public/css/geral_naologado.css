@@ -1,0 +1,76 @@
+
+
+
+/*Sidebar*/
+.sidebar ul {
+	margin-left:-40px;
+}
+
+.sidebar ul li{
+	margin-left:0px;
+	width:100%;
+	height:40px;
+	margin-top:20px;
+	
+}
+
+.sidebar ul li a{
+	font-size:20pt;
+	color:#2a2a2a;
+	text-decoration:none;
+	padding:10px;
+	display:block;
+}
+
+.sidebar ul li a:hover, .sidebar ul li a:focus{
+	color:#2a2a2a;
+	background-color:#ccc;
+}
+
+
+#logo{
+	width:150px;
+	
+}
+
+/*barra superior*/
+
+
+ #logomenu{
+	height:30px;
+	margin-top:5px;
+	float:right;
+}
+
+/*Conteudo*/
+
+
+.rodape{
+	
+	text-align:center;
+	font-family: 'Helvetica-neue'; 
+	font-weight:bold;
+	position:relative;
+	width:calc(100% - 20px);
+	padding:10px;
+	background-color:#e7e7e7;
+	overflow:hidden;
+	height:80px;
+}
+
+
+.content{
+	width:calc(100% - 250px);
+	margin-left:250px;
+	padding-top: 50px;
+	overflow-x:hidden; 
+}
+
+.conteudo{
+	position:relative;
+	max-width:800px;
+	margin:0 auto;
+	padding:10px;
+	min-width: 300px;
+	min-height:600px;
+}

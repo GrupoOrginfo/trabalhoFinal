@@ -15,9 +15,20 @@ class HomeController extends BaseController {
 	|
 	*/
 
-	public function getHome()
+	public function getLogin()
 	{
-		return View::make('home');
+		return View::make('login')->with("pagina", "SignInUp");
 	}
+
+	public function getAbout()
+	{
+		return View::make('sobre')->with("pagina", "Sobre");
+	}
+
+	public function getSupport()
+	{
+		return View::make('suporte')->with("pagina", "Suporte");
+	}
+
 
 }

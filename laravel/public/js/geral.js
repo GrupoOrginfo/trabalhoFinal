@@ -3,6 +3,7 @@
 //					Variaveis					//
 //----------------------------------------------//
 
+janela = $(window);
 var width ;
 var timer;
 var controle= -250; //isso e a margem esquerda da sidebar. Quando carrega a pagina tem valor -250.  
@@ -34,6 +35,7 @@ function resize(){	//Essa funcao verifica se a largura da janela e menor que 650
 		$("#abremenu").stop().css({"width":"100%"});
 		$('#menu').stop().css({"display": "block"}); //Mostra botao de menu
 		
+		
 	}else{
 		controle = -250;
 		$("body").stop().css({"marginLeft":"0px"});	//Mostra sidebar 
@@ -43,6 +45,10 @@ function resize(){	//Essa funcao verifica se a largura da janela e menor que 650
 }
 
 
+janela.on("load",function(){//essa funcao apaga a msg depois que ele é mostrado
+		$("#mainmsg").delay(1100).fadeOut(1500);
+		$("#failmsg").delay(1100).fadeOut(1500);
+	});
 
 function controlemenu(valor){ //Essa funcao tambem mostra/esconde sidebar mas so funciona com as chamadas de touch e click de mouse 
 //estes if's verificam qual a acao do usuario.
@@ -148,3 +154,5 @@ document.addEventListener("touchend", function(ev){ //verifica quando o usuário
 	}
 	
 },false);
+
+
