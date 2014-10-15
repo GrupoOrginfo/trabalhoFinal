@@ -17,8 +17,8 @@ class CreateTableUsuariosUsuarios extends Migration {
 			$table->integer("usuario_id")->unsigned();
 			$table->integer("amigo_id")->unsigned();
 			$table->timestamps();
-			$table->foreign("usuario_id")->references("id")->on("usuarios");
-			$table->foreign("amigo_id")->references("id")->on("usuarios");
+			$table->foreign("usuario_id")->references("id")->on("usuarios")->onDelete('cascade');
+			$table->foreign("amigo_id")->references("id")->on("usuarios")->onDelete('cascade');
 
 		});
 	}
@@ -31,6 +31,7 @@ class CreateTableUsuariosUsuarios extends Migration {
 	public function down()
 	{
 		//
+		Schema::drop("usuario_usuario");
 	}
 
 }

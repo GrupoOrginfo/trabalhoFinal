@@ -108,6 +108,8 @@ class LoginController extends BaseController {
 			$usuario = Usuario::find($usuario_id);
 			$usuario->status = true;
 			$usuario->save();
+
+			$foto = $usuario->profilePicture;
 			
 
 			return Redirect::to('home')->withMsg("Você logou como ".Auth::user()->nome);

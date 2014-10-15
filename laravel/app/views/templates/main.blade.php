@@ -39,9 +39,7 @@
 
 	</div>
 	
-	
-
-	<script src="{{asset('js/geral.js')}}"></script>
+	<script type="text/javascript" src="{{asset('js/geral.js')}}"></script>
 
 	@yield('jsAdicional')
 </body>

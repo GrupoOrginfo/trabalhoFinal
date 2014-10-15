@@ -44,6 +44,12 @@ body{/*Configuração da janela*/
 
 /* Configurações da Barra Superior*/
 
+#title{
+	padding:10px 0 10px 0;
+	width: 90px;
+	margin: 0 auto;
+	display: inline-block;
+}
 
 #abremenu{
 	

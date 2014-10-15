@@ -16,9 +16,9 @@
 @section('abremenu')
 	<div id="abremenu">
 			<a id="menu">
-			<img data-opt="menuclick" height="40" src="{{asset('img/menu.svg')}}" />
+				<img data-opt="menuclick" height="40" src="{{asset('img/menu.svg')}}" />
 			</a>
-			CAYANA
+			<div id="title">CAYANA</div>
 			<img id="logomenu" src="{{asset('img/desenho.svg')}}" />
 			
 	</div>

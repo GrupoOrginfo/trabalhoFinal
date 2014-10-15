@@ -38,11 +38,21 @@
 
 /*barra superior*/
 
-
- #logomenu{
+#showprofileoptions{
 	height:30px;
 	margin-top:5px;
 	float:right;
+	margin-right: 5px;
+	color:#555;
+}
+
+#showprofileoptions  div{
+	float: left;
+	padding: 5px;
+}
+
+ #fotoperfil{
+ 	height: 100%;
 }
 
 /*Conteudo*/
@@ -107,3 +117,91 @@
 	}
 
 }
+
+
+#bottomSidebar{
+	width: 250px;
+	height: 55px;
+	padding-top: 0px;
+	position: fixed;
+	bottom: 0px;
+}
+
+#bottomSidebar ul{
+	margin: 0 ;
+
+
+}
+
+#bottomSidebar ul li{
+	list-style: none;
+	margin: 3px 3px 3px -37px ;
+}
+
+#bottomSidebar ul li a{
+	padding: 3px;
+	border-radius: 2px;
+	width: 40px;
+	height: 43px;
+	margin: 0;
+}
+
+#bottomSidebar ul li a:hover{
+	background-color: #ccc;
+	margin: 0;
+}
+
+
+#bottomSidebar ul li a img{
+	width: 40px;
+	
+}
+
+#profileoptions {
+	position: absolute;
+	right: 10px;
+	top: 45px;
+	background-color: rgba(0,0,0,0.5);
+	border-radius: 5px;
+	display: none;
+	padding: 5px;
+
+}
+
+
+#profileoptions ul{
+	padding: 0;
+	margin: 0;
+}
+
+
+#profileoptions ul li{
+	list-style: none;
+	float: left;
+	margin: 3px;
+}
+
+#profileoptions ul li a{
+	padding: 5px;
+	width: 30px;
+	height: 30px;
+	display: block;
+	border-radius: 2px;
+}
+
+#profileoptions ul li a:hover{
+	background-color: #555;
+}
+
+
+#profileoptions ul li a img{
+	width: 30px;
+}
+
+#trash{
+	width: 200px;
+	height: 200px;
+	background-color: red;
+}
+
+

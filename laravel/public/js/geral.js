@@ -156,3 +156,31 @@ document.addEventListener("touchend", function(ev){ //verifica quando o usuário
 },false);
 
 
+statusprofileoptions = true;
+
+document.addEventListener("click", function(e){
+	var id = e.target.id;
+
+
+	if((id == "fotoperfil")||(id =="showprofileoptions")||(id == "usernameperfil")){
+		if (statusprofileoptions)
+		{
+			$('#profileoptions').css({'display':'block'});
+			statusprofileoptions = false;
+		}
+		else
+		{
+			$('#profileoptions').css({'display':'none'});
+			statusprofileoptions = true;
+		}
+	}
+	else
+	{
+		if(id != "profileoptions")
+		{
+			$('#profileoptions').css({'display':'none'});
+			statusprofileoptions = true;
+		}
+	}
+});
+

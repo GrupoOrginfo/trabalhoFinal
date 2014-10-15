@@ -30,8 +30,16 @@ Route::group(array('before' => 'auth'), function()
 {
  
  	Route::get('/home', 'UsuarioController@getUser');
-	Route::get('/addamigo', 'UsuarioController@addAmigo');
-	Route::post('/removeamigo', 'UsuarioController@removeAmigo');
+
+	Route::post('/addamigo', 'UsuarioController@postAddAmigo');
+	Route::get('/addamigo', 'UsuarioController@getAddAmigo');
+
+	Route::post('/removeamigo', 'UsuarioController@postRemoveAmigo');
+	Route::get('/removeamigo', 'UsuarioController@getRemoveAmigo');
+
+	Route::post('/editaperfil', 'UsuarioController@postEditarPerfil');
+	Route::get('/editaperfil', 'UsuarioController@getEditarPerfil');
+
 	Route::get('/logout', function(){
 		$usuario_id = Auth::id();
 
@@ -41,8 +49,12 @@ Route::group(array('before' => 'auth'), function()
 		$usuario->status = false;
 		$usuario->save();
 		return Redirect::to('/');
-});
+	});
+	
 	Route::get('/amigos','UsuarioController@verificaAmigos');
+
+	Route::any('/removeusuario','UsuarioController@removeUsuario');
+
 	
 
 });

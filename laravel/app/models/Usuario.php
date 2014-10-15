@@ -22,7 +22,7 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var array
 	 */
 	
-	protected $fillable = array("nome","senha", "email");
+	protected $fillable = array("nome","senha", "email", "time_request");
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -31,11 +31,15 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
-	public function usuario_usuario()
+
+	public function euFizAmizadeCom()
     {
         return $this->belongsToMany('Usuario','usuario_usuario','usuario_id','amigo_id');
     }
 
+    public function fezAmizadeComigo(){
+    	return $this->belongsToMany("Usuario","usuario_usuario","amigo_id","usuario_id");
+    }
 
     public function getAuthPassword(){
 
