@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
+			'host'      => 'ctcp8-3.czwmrsjto98v.us-west-2.rds.amazonaws.com',
 			'database'  => 'TrabOrginfo',
-			'username'  => 'root',
-			'password'  => '',
+			'username'  => 'ctcp',
+			'password'  => 'ctcp123456',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
