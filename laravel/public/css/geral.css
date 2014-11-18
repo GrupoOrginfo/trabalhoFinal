@@ -46,7 +46,7 @@ body{/*Configuração da janela*/
 
 #title{
 	padding:10px 0 10px 0;
-	width: 90px;
+	min-width: 90px;
 	margin: 0 auto;
 	display: inline-block;
 }

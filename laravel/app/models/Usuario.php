@@ -41,6 +41,10 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
     	return $this->belongsToMany("Usuario","usuario_usuario","amigo_id","usuario_id");
     }
 
+    public function minhasConversas(){
+    	return $this->belongsToMany("Conversa","usuario_conversa","usuario_id","conversa_id");
+    }
+
     public function getAuthPassword(){
 
 		return $this->senha;

@@ -6,6 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 <script src="{{asset('js/jquery-1.9.1.js')}}"></script>
 
+@yield('scriptConversa')
+
+
 @yield('cssAdicional')
 <link type="text/css" rel="stylesheet" href="{{asset('css/geral.css')}}">
 
@@ -31,7 +34,7 @@
 	@yield('abremenu')
 	
 	<div class="content">	
-		<div class="conteudo">	
+		<div id="conteudo" class="conteudo">	
 			@yield('conteudo')
 		</div>
 		

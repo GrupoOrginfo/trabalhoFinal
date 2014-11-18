@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableUsuariosUsuarios extends Migration {
+class CreateTableUsuarioConversas extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,12 @@ class CreateTableUsuariosUsuarios extends Migration {
 	 */
 	public function up()
 	{
-		//
-		Schema::create("usuario_usuario",function($table){
+		Schema::create("usuario_conversa",function($table){
 			$table->integer("usuario_id")->unsigned();
-			$table->integer("amigo_id")->unsigned();
+			$table->integer("conversa_id")->unsigned();
 			$table->timestamps();
 			$table->foreign("usuario_id")->references("id")->on("usuarios")->onDelete('cascade');
-			$table->foreign("amigo_id")->references("id")->on("usuarios")->onDelete('cascade');
+			$table->foreign("conversa_id")->references("id")->on("conversas")->onDelete('cascade');
 
 		});
 	}
@@ -30,8 +29,7 @@ class CreateTableUsuariosUsuarios extends Migration {
 	 */
 	public function down()
 	{
-		//
-		Schema::drop("usuario_usuario");
+		Schema::drop("usuario_conversa");
 	}
 
 }

@@ -11,7 +11,7 @@
 				<img data-opt="menuclick" height="40" src="{{asset('img/menu.svg')}}" />
 			</a>
 			
-			<div id="title">CAYANA</div>
+			<div id="title">{{$title}}</div>
 			
 			<a id="showprofileoptions" href="#"><div id="usernameperfil">{{$user}}</div><img id="fotoperfil" src="{{asset('img').'/profile/'.$foto}}" /></a>
 
@@ -31,7 +31,7 @@
 
 @section('sidebar')
 <div id="sidebar" data-opt="clicknot"  class="sidebar">
-		<a href="{{URL::to('/home')}}"><img draggable="true" ondragstart="drag(event)" id="logo" data-opt="clicknot" src="{{asset('img/desenho.svg')}}" /></a>
+		<a href="{{URL::to('/home')}}"><img id="logo" data-opt="clicknot" src="{{asset('img/desenho.svg')}}" /></a>
 		<span>CAYANA</span>
 		
 		<ul data-opt="clicknot" id="contatos"  style="font-size:10pt; list-style:none">
@@ -43,7 +43,12 @@
 
 
 @section('jsAdicional')
-
+	<script type="text/javascript">
+		urlroot = "{{asset('')}}";
+		conversaAtiva="{{$title}}";
+		
+	</script>
+	
 	<script type="text/javascript" src="{{asset('js/ajax.js')}}"></script>
 
 @stop

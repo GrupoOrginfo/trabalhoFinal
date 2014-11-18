@@ -25,7 +25,7 @@ class UsuarioController extends BaseController {
 		$username = $usuario->username;
 
 
-		return View::make('home')->withFoto($foto)->withUser($username);
+		return View::make('home')->withFoto($foto)->withUser($username)->withTitle("CAYANA");
 	}
 
 	public function getEditarPerfil(){
@@ -36,7 +36,7 @@ class UsuarioController extends BaseController {
 		$foto = $usuario->profilePicture;
 		$username = $usuario->username;
 
-		return View::make('editperfil')->withFoto($foto)->withUser($username);
+		return View::make('editperfil')->withFoto($foto)->withUser($username)->withTitle("CAYANA");
 		
 	}
 
@@ -122,9 +122,62 @@ class UsuarioController extends BaseController {
 		$foto = $usuario->profilePicture;
 		$username = $usuario->username;
 
-		return View::make('addamigo')->withFoto($foto)->withUser($username);
+		return View::make('addamigo')->withFoto($foto)->withUser($username)->withTitle("CAYANA");
 
 	}
+
+
+
+
+
+	function criarConversa($amigo_id,$usuario_id)
+	{	
+		$conversa = new Conversa();
+		
+		$usuario = Usuario::find($usuario_id);
+
+		$amigo = Usuario::find($amigo_id);
+
+		
+		
+		$conversa->grupo = $usuario->username.",".$amigo->username;
+
+		$conversa->save();
+		
+	
+		$conversa->pertence()->attach($amigo->id);
+		$conversa->pertence()->attach($usuario->id);
+
+
+		$tempo = date('Y-m-d H:i:s',time());
+
+		
+		$dom = new DOMDocument('1.0','UTF-8');
+
+		$dom->preserveWhiteSpaces = false;
+		 
+		$dom->formatOutput = true;
+
+		$root = $dom->createElement("chat");
+
+		$root->setAttribute("tempo",$tempo);
+
+		$dom->appendChild($root);
+
+		$dir = __DIR__. "/../../xml";
+
+		mkdir($dir."/".$conversa->id,0777);
+
+		$dom->save($dir."/".$conversa->id."/".$conversa->id.".xml");
+
+		$conversa->url = $dir."/".$conversa->id."/".$conversa->id.".xml";
+
+		$conversa->save();
+
+	}
+
+
+
 
 
 	public function postAddAmigo(){
@@ -160,7 +213,12 @@ class UsuarioController extends BaseController {
 				}
 				else
 				{
+
+					$this->criarConversa($amigo->id,$usuario_id);
+
 					$usuario->euFizAmizadeCom()->attach($amigo->id);
+					
+
 
 					return Redirect::back()->withMsg("Amigo Adicionado!");
 				}
@@ -183,7 +241,7 @@ class UsuarioController extends BaseController {
 		$foto = $usuario->profilePicture;
 		$username = $usuario->username;
 
-		return View::make('rmamigo')->withFoto($foto)->withUser($username);
+		return View::make('rmamigo')->withFoto($foto)->withUser($username)->withTitle("CAYANA");
 		
 		
 	}
@@ -245,68 +303,90 @@ class UsuarioController extends BaseController {
 		$usuario_id = Auth::id();
 		$usuario = Usuario::find($usuario_id);
 
+		$conversas = $usuario->minhasConversas();
+
+		
+
 		$amigos = $usuario->euFizAmizadeCom()->get();
 		$user = $usuario->fezAmizadeComigo()->get();
 		$amizades = [];
-		
-		
+
+
 
 		$usuario->time_request = date('Y-m-d H:i:s',time());
 
 		$usuario->save();
 
+		if(!empty($amigos)){
 		
+			foreach ($amigos as $amigo) {
 
-		
+				$conversa = Conversa::where("grupo","=",$usuario->username.",".$amigo->username)->first();
 
+				$atualtime = date('U',strtotime('-15 seconds',time()));
 
-		foreach ($amigos as $amigo) {
-
-			$atualtime = date('U',strtotime('-5 seconds',time()));
-
-			$timebd = date('U', strtotime($amigo->time_request));
+				$timebd = date('U', strtotime($amigo->time_request));
 
 
+				$amizades[$amigo->username]["nome"] = $amigo->nome;
 
-			$amizades[$amigo->username]["nome"] = $amigo->nome;
-			
+				$amizades[$amigo->username]["conversa"] = $conversa->id;
 
-			if( $atualtime >= $timebd )
-			{
-				$amizades[$amigo->username]["status"] = 0;
+
+				if( $atualtime >= $timebd )
+				{
+					$amizades[$amigo->username]["status"] = 0;
+				}
+				else
+				{
+					$amizades[$amigo->username]["status"] = $amigo->status;
+				}
+				
+				$amizades[$amigo->username]["fotoPerfil"] = asset('img').'/profile/'.$amigo->profilePicture;
+
+				$amizades[$amigo->username]["notify"] = DB::table("usuario_conversa")->where("conversa_id","=",$conversa->id)->where("usuario_id","=",$usuario_id)->first()->notification;
+
 			}
-			else
-			{
-				$amizades[$amigo->username]["status"] = $amigo->status;	
-			}
-			
-			$amizades[$amigo->username]["fotoPerfil"] = asset('img').'/profile/'.$amigo->profilePicture;
-
 		}
 
-		foreach ($user as $user) {
-
-			$atualtime = date('U',strtotime('-5 seconds',time()));
-
-			$timebd = date('U', strtotime($user->time_request));
+		if(!empty($user)){
 
 
+			foreach ($user as $user) {
 
-			$amizades[$user->username]["nome"] = $user->nome;
+				$atualtime = date('U',strtotime('-15 seconds',time()));
+
+				$timebd = date('U', strtotime($user->time_request));
+
+
+
+				$amizades[$user->username]["nome"] = $user->nome;
+				$amizades[$user->username]["chat"] = $user->nome;
+
+				$conversa2 = Conversa::where("grupo","=",$user->username.",".$usuario->username)->first();
+
+
+
+				$amizades[$user->username]["conversa"] = $conversa2->id;
+
+
+				if( $atualtime >= $timebd )
+				{
+					$amizades[$user->username]["status"] = 0;
+				}
+				else
+				{
+					$amizades[$user->username]["status"] = $user->status;	
+				}
+				
+				$amizades[$user->username]["fotoPerfil"] = asset('img').'/profile/'.$user->profilePicture;	
+
+				
+
+				$amizades[$user->username]["notify"] = DB::table("usuario_conversa")->where("conversa_id","=",$conversa2->id)->where("usuario_id","=",$usuario->id)->first()->notification;
 			
 
-
-			if( $atualtime >= $timebd )
-			{
-				$amizades[$user->username]["status"] = 0;
 			}
-			else
-			{
-				$amizades[$user->username]["status"] = $user->status;	
-			}
-			
-			$amizades[$user->username]["fotoPerfil"] = $user->profilePicture;		
-
 		}
 
 		$amizade = json_encode($amizades);

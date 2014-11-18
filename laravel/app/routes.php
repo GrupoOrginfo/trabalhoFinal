@@ -46,14 +46,25 @@ Route::group(array('before' => 'auth'), function()
 		Auth::logout();
 
 		$usuario = Usuario::find($usuario_id);
-		$usuario->status = false;
 		$usuario->save();
 		return Redirect::to('/');
 	});
 	
-	Route::get('/amigos','UsuarioController@verificaAmigos');
+	Route::get('/conversa/{amigo}','ConversasController@getConversa');
 
-	Route::any('/removeusuario','UsuarioController@removeUsuario');
+	Route::get('/removeusuario','UsuarioController@removeUsuario');
+
+
+
+//-------------------AJAX METHODS-------------------------------
+	Route::post('/amigos','UsuarioController@verificaAmigos');
+
+	Route::post('/addConversa','ConversasController@add');
+
+	Route::post('/leConversa','ConversasController@le');
+//--------------------------------------------------------------
+
+	
 
 	
 

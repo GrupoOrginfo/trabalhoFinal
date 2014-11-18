@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnTimeRequest extends Migration {
+class AddColumnNotificationOnTableUsuarioConversa extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,8 @@ class AddColumnTimeRequest extends Migration {
 	 */
 	public function up()
 	{
-		
-		Schema::table("usuarios",function($table){
-			$table->dateTime('time_request');
+		Schema::table("usuario_conversa",function($table){
+			$table->string('notification');
 		});
 	}
 
@@ -25,8 +24,8 @@ class AddColumnTimeRequest extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table("usuarios",function($table){
-			$table->dropColumn('time_request');
+		Schema::table("usuario_conversa",function($table){
+			$table->dropColumn('notification');
 		});
 	}
 
